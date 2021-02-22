@@ -133,7 +133,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 #background {
-  background-color: lightblue;
+  background:radial-gradient(circle farthest-corner at left, rgb(88, 97, 219), rgb(93, 159, 197));
+  //background-color: lightblue;
   width: 100vw;
   height: 100vh;
   padding-top: 240px;
@@ -142,7 +143,7 @@ export default {
 .Auth {
   width: 600px;
   height: 440px;
-  background-color: rgb(240, 245, 248);
+  background-color: rgba(240, 245, 248, 0.75);
   border-radius: 10px;
   margin: auto;
   padding: 20px 70px;
