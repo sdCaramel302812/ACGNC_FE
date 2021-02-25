@@ -5,7 +5,8 @@
         <b-tab title="sign in">
           <b-form-group class="oauth-button-group" label-align>
             <ul v-for="item in oauth" :key="item" style="padding: 0px">
-              <b-button class="oauth-button"></b-button>
+              <b-button class="oauth-button" :class="item" style="box-shadow: none;">
+              </b-button>
             </ul>
           </b-form-group>
           <b-form-group>
@@ -160,6 +161,29 @@ export default {
   margin: 0 10px;
   border-radius: 50%;
   float: left;
+  background-color: transparent;
+  border: 0px;
+  &:active, &:focus {
+    outline: 0px;
+    box-shadow: none;
+  }
+}
+
+.google {
+  background-image: url('../assets/Google.svg');
+}
+
+.github {
+  background-image: url('../assets/Github.png');
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-size: 50px auto;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show>.btn-secondary.dropdown-toggle {
+  background-color: transparent;
 }
 
 .login-button {
