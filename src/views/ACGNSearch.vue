@@ -1,6 +1,7 @@
 <template>
   <div>
-    <SearchBar placeholder="test" @payload="search" />
+    <SearchBar placeholder="作品名" @payload="search" :tagsList="tags" />
+    123<br>345<br>jkhjk<br>hk<br>kjhk<br>mh<br>ghj<br>jhg<br>jhg<br>jhg<br>jhg<br>
   </div>
 </template>
 <script>
@@ -23,7 +24,6 @@ export default {
   },
   async mounted() {
     await this.fetchTags();
-    console.log(this.tags);
   },
 }
 </script>
