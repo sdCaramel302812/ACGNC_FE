@@ -28,7 +28,7 @@
               class="input-block"
             ></b-form-input>
           </b-form-group>
-          <b-button class="login-button">SIGN IN</b-button>
+          <b-button class="login-button" @click="login">SIGN IN</b-button>
           <button class="forget-password">forget password</button>
         </b-tab>
         <b-tab title="sign up">
@@ -69,6 +69,8 @@
   </div>
 </template>
 <script>
+import { API } from '@/utils/constant.js';
+
 export default {
   name: 'Login',
   data() {
@@ -128,6 +130,33 @@ export default {
       } else {
         this.signUpState.password = true;
       }
+    }
+  },
+  methods: {
+    async login() {
+      const config = {
+        strategy: "local",
+        email: this.usernameSignIn,
+        password: this.passwordSignIn,
+      };
+      let result = '';
+      let status = false;
+      await this.axios.post(API.AUTH, config)
+      .then(res => {
+        result = res;
+        status = true;
+      })
+      .catch(err => {
+        console.log(err);
+        status = false;
+      });
+
+      if (!status) {
+        return;
+      }
+      this.$cookie.set('jwt', result.data.accessToken, 30);
+
+      this.$router.push('/');
     }
   }
 }

@@ -4,7 +4,7 @@
       <b-button class="nav-button" @click="toggleLeftNav">
         <b-img src="@/assets/list-24px.svg"></b-img>
       </b-button>
-      <b-navbar-brand href="#" style="float: left;">ACGN Category</b-navbar-brand>
+      <b-navbar-brand href="/" style="float: left;">ACGN Category</b-navbar-brand>
       <b-navbar-nav class="ml-auto">
         <Account class="account-button" />
       </b-navbar-nav>

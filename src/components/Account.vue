@@ -4,7 +4,7 @@
       <template #button-content class="inner-button">
         <b-img src="@/assets/person-24px.svg"></b-img>
       </template>
-      <b-dropdown-item>
+      <b-dropdown-item @click="logout">
         Logout
       </b-dropdown-item>
     </b-dropdown>  
@@ -12,7 +12,12 @@
 </template>
 <script>
 export default {
-  
+  name: 'Account',
+  methods: {
+    logout() {
+      this.$router.push('/login');
+    }
+  },
 }
 </script>
 <style lang="scss" scoped>

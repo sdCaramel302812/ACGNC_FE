@@ -1,8 +1,14 @@
 <template>
   <div id="tool-bar" class="sidebar" :class="sidebarStatus()">
     <b-navbar-nav>
-      <b-nav-item class="nav-link">ACGN Category 1</b-nav-item>
-        <b-nav-item class="nav-link">ACGN Category 2</b-nav-item>
+      <b-nav-item 
+        class="nav-link"
+        @click="$router.push({ path: 'acgn-search' })"  
+      >ACGN Search</b-nav-item>
+        <b-nav-item 
+        class="nav-link"
+        @click="$router.push({ path: '/' })"  
+      >Home</b-nav-item>
         <b-nav-item class="nav-link">ACGN Category 3</b-nav-item>
         <b-nav-item class="nav-link">ACGN Category 4</b-nav-item>
         <b-nav-item class="nav-link">ACGN Category 5</b-nav-item>

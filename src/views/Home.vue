@@ -3,7 +3,7 @@
     <TopNavigation />
     <LeftNavigation />
     <div :class="mainAreaStatus()">
-      12345
+      <router-view/>
     </div>
   </div>
 </template>
