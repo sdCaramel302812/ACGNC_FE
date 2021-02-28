@@ -7,9 +7,10 @@
         :placeholder="placeholder"
         @keyup.enter="search()"
         v-model="searchText"
+        style="height: 35px;"
       ></b-form-input>
       <b-input-group-append>
-        <b-button size="sm" text="Search" @click="search()">Search</b-button>
+        <b-button style="height: 35px;" size="sm" text="Search" @click="search()">Search</b-button>
       </b-input-group-append>
     </b-input-group>
     <b-form-tags 
@@ -29,8 +30,11 @@
             @keyup="onKeyUp"
             autocomplete="off"
           ></b-form-input>
+          <b-input-group-append>
+            <b-button style="height: 30px;" size="sm" text=" + " @click="openTagsModal"> + </b-button>
+          </b-input-group-append>
         </b-input-group>
-        <div class="d-inline-block" style="font-size: 1.5rem;">
+        <div class="d-inline-block" style="font-size: 1.3rem;">
           <b-form-tag
             v-for="tag in tags"
             @remove="removeTag(tag)"
@@ -48,21 +52,32 @@
           :key="item"
           v-for="item in resultList"
           class="result-item"
+          @keyup="onListKeyUp"
+          @keyup.enter="tagSelect(item)"
+          @click="tagSelect(item)"
+          button
         >
           {{ item }}
         </b-list-group-item>
       </VuePerfectScrollbar>
     </b-list-group>
+    <MultiSelect
+      :tagsList="sortedTagList"
+      v-model="tags"
+    />
   </div>
 </template>
 <script>
+/* eslint-disable vue/no-unused-components */
 import fuzzsort from 'fuzzysort';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar';
+import MultiSelect from '@/components/MultiSelect.vue';
 
 export default {
   name: 'SearchBar',
   components: {
     VuePerfectScrollbar,
+    MultiSelect,
   },
   props: {
     placeholder: String,
@@ -74,6 +89,7 @@ export default {
       tags: [],
       tagInput: '',
       resultList: [],
+      sortedTagList: [],
     };
   },
   watch: {
@@ -98,18 +114,64 @@ export default {
     },
     onKeyUp(event) {
       if (this.resultList.length > 0 && event.key === 'ArrowDown') {
-        console.log('down');
+        const elm = this.$el.querySelector('.list-group-item.result-item');
+        elm.focus();
+        return;
       }
+      if (event.key === 'Enter') {
+        this.clearTagSearch();
+      }
+    },
+    onListKeyUp(event) {
+      let elm = null;
+      switch(event.key) {
+        case 'ArrowUp':
+          elm = event.target.previousElementSibling;
+          break;
+        case 'ArrowDown':
+          elm = event.target.nextElementSibling;
+          break;
+        default:
+          break;
+      }
+      if (elm) {
+        elm.focus();
+      }
+    },
+    tagSelect(item) {
+      this.tags.push(item);
+      this.clearTagSearch();
+    },
+    clearTagSearch(focus = true) {
+      this.tagInput = '';
+      this.resultList = [];
+      
+      if (focus) {
+        const elm = this.$el.querySelector('.tag-input');
+        elm.focus();
+      } 
+    },
+    openTagsModal() {
+      this.tagsList.sort((a, b) => {
+        return b.count - a.count;
+      });
+
+      this.sortedTagList = [];
+      this.tagsList.forEach(element => {
+        this.sortedTagList.push(element.name);
+      });
+
+       this.$bvModal.show('tag-modal');
     }
-  }
+  },
 }
 </script>
 <style lang="scss" scoped>
 .search-block {
   padding-top: 15px;
-  height: 180px;
   width: 400px;
   margin: auto;
+  position: relative;
 }
 
 .text-search {
@@ -128,12 +190,14 @@ export default {
 .tag-input {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
+  height: 30px;
 }
 
 .result-list {
   max-height: 300px;
   width: 400px;
   text-align: center;
+  position: absolute;
   z-index: 1;
 }
 </style>

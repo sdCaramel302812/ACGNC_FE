@@ -1,9 +1,14 @@
 <template>
   <div class="home">
-    <TopNavigation />
+    <b-row no-gutters>
+      <b-col>
+        <TopNavigation />
+      </b-col>
+    </b-row>
+    
     <LeftNavigation />
-    <div :class="mainAreaStatus()">
-      <router-view/>
+    <div :class="mainAreaStatus()" class="main-area">
+        <router-view />
     </div>
   </div>
 </template>
@@ -37,11 +42,19 @@ export default {
   height: 100vh;
 }
 
+.main-area {
+  height: calc(100vh - 60px);
+  position: fixed;
+  overflow-y: auto;
+}
+
 .main-area-full {
   margin-left: 0px;
+  width: 100%;
 }
 
 .main-area-left-nav {
   margin-left: 240px;
+  width: calc(100% - 240px);
 }
 </style>

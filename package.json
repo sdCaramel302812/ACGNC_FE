@@ -12,6 +12,7 @@
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
     "fuzzysort": "^1.1.4",
+    "jsonwebtoken": "^8.5.1",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
     "vue-cookie": "^1.1.4",

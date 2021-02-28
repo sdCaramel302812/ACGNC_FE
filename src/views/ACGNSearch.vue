@@ -1,8 +1,14 @@
 <template>
-  <div>
+  <b-container class="acgn-search">
     <SearchBar placeholder="作品名" @payload="search" :tagsList="tags" />
-    123<br>345<br>jkhjk<br>hk<br>kjhk<br>mh<br>ghj<br>jhg<br>jhg<br>jhg<br>jhg<br>
-  </div>
+    
+    <!--1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>
+    1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>
+    1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>
+    1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>
+    1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>
+    1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br><!- -->
+  </b-container>
 </template>
 <script>
 import SearchBar from '@/components/SearchBar.vue';
@@ -12,6 +18,10 @@ export default {
   name: 'ACGNSearch',
   components: {
     SearchBar,
+  },
+  data() {
+    return {
+    };
   },
   computed: {
     ...mapState('acgn', ['tags']),
@@ -28,5 +38,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+.acgn-search {
+  background-color: rgb(228, 228, 228);
+}
 </style>

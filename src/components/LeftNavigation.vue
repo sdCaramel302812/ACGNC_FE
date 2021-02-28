@@ -45,10 +45,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .sidebar {
-  height: 100%;
+  height: calc(100vh - 60px);
   position: fixed;
   z-index: 1;
-  top: 66px;
+  top: 60px;
   left: 0;
   background-color: rgb(240, 240, 240);
   overflow-x: hidden;

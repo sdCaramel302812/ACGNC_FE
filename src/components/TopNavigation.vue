@@ -27,7 +27,6 @@ export default {
   methods: {
     ...mapMutations('home', ['setNavbarClosed']),
     toggleLeftNav() {
-      console.log(this.navbarClosed);
       this.setNavbarClosed(!this.navbarClosed);
     }
   },
@@ -37,6 +36,10 @@ export default {
 .main-nav {
   padding: 8px;
   width: 100vw;
+  height: 60px;
+  //position: fixed;
+  //top: 0;
+  //z-index: 10;
 }
 
 .nav-button {
