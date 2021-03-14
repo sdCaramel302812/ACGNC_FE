@@ -3,7 +3,7 @@
     <b-navbar-nav>
       <b-nav-item 
         class="nav-link"
-        @click="$router.push({ path: 'acgn-search' })"  
+        @click="$router.push({ path: '/acgn-search' })"  
       >ACGN Search</b-nav-item>
         <b-nav-item 
         class="nav-link"

@@ -11,34 +11,51 @@
           <b-form-group
             label="作品名"
           >
-            <b-form-input></b-form-input>
+            <b-form-input v-model="worksTitle"></b-form-input>
           </b-form-group>
-          <label>tag</label>
-          <b-button class="select-tag-button" @click="openTagsModal">select</b-button>
-          <b-list-group style="height: 153px;">
-            <VuePerfectScrollbar>
-              <b-list-group-item
-                v-for="item in worksTags"
-                :key="item"
-                style="height: 30px; line-height: 0.6; font-size: 14px;"
-              >{{ item }}</b-list-group-item>
-            </VuePerfectScrollbar>
-            
-          </b-list-group>
+          <b-form-rating variant="success" no-border v-model="rate"></b-form-rating>
+          <TagSearch :tagsList="tags" ref="tagSearch" />
         </b-col>
         <b-col>
           <b-form-group
             label="簡介"
           >
-            <b-textarea style="height: 240px;"></b-textarea>
+            <b-textarea style="height: 235px;" v-model="intro"></b-textarea>
           </b-form-group>
           
         </b-col>
-        <MultiSelect
-          :tagsList="sortedTagList"
-          v-model="worksTags"
-        />
       </b-row>
+      <b-tabs style="margin-bottom: 100px;">
+        <b-tab title="章節">
+          <b-list-group>
+            <b-list-group-item
+              v-for="item in chapterContent"
+              :key="item.id"
+            >
+              <b-button v-b-toggle="item.id" variant="outline-secondary" class="chapter-button">{{ item.title }}</b-button>
+              <b-collapse :id="item.id">
+                <b-row>
+                  <b-input style="width: 30%; float: left;" v-model="item.title"></b-input>
+                  <b-button
+                    variant="danger"
+                    style="position: absolute; right: 0px;"
+                    @click="deleteChapter(item)"  
+                  >delete</b-button>
+                </b-row>
+                  <ckeditor :editor="editor" v-model="item.content" :config="editorConfig"></ckeditor>
+                
+                
+              </b-collapse>
+            </b-list-group-item>
+          </b-list-group>
+          <b-button
+            @click="addChapter"
+            variant="outline-primary"
+            class="chapter-button"
+          >+</b-button>
+        </b-tab>
+        <b-tab title="時間軸"></b-tab>
+      </b-tabs>
     </div>
     <div v-if="isAddTag">
       <b-row>
@@ -59,23 +76,39 @@
   </b-container>  
 </template>
 <script>
-import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-import MultiSelect from '@/components/MultiSelect.vue';
+import TagSearch from '@/components/TagSearch.vue';
 import { mapState, mapActions } from 'vuex';
 import { API } from '@/utils/constant.js';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
   name: 'ACGNAdd',
   components: {
-    VuePerfectScrollbar,
-    MultiSelect,
+    TagSearch,
   },
   data() {
     return {
       isAddTag: false,
+      worksTitle: '',
+      rate: 0,
+      intro: '',
+      // search for tags
       tagInput: '',
       worksTags: [],
       sortedTagList: [],
+      // chapter content
+      chapterContent: [],
+      chapterId: 0,
+      // ck editor
+      editor: ClassicEditor,
+      editorConfig: {
+        ckfinder: {
+          uploadUrl: API.IMG,
+          options: {
+            resourceType: "Images",
+          }
+        }
+      },
     };
   },
   computed: {
@@ -119,8 +152,34 @@ export default {
           });
         }
       } else {
-        console.log('foo');
+        if (this.worksTitle) {
+          const infoReqBody = {
+            title: this.worksTitle,
+            tags: this.$refs.tagSearch.tags,
+            rate: this.rate,
+            intro: this.intro,
+          };
+          this.axios.post(API.WORKS_INFO, infoReqBody);
+          const chapterReqBody = {
+            title: this.worksTitle,
+            chapter: this.chapterContent,
+          }
+          this.axios.post(API.WORKS_CHAPTER, chapterReqBody);
+        }
       }
+    },
+    addChapter() {
+      this.chapterContent.push({
+        id: `id${this.chapterId}`,
+        title: 'Title',
+        content: '',
+      });
+      this.chapterId++;
+    },
+    deleteChapter(item) {
+      this.chapterContent = this.chapterContent.filter(content => {
+        return item.id !== content.id;
+      });
     },
   },
   async mounted() {
@@ -133,6 +192,15 @@ export default {
   width: 90%;
   padding-top: 40px;
   min-width: 400px;
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+::v-deep p {
+  margin-bottom: 5px;
 }
 
 .list-item {
@@ -149,5 +217,18 @@ export default {
 
 ::v-deep .ps__rail-y {
   z-index: 10;
+}
+
+.chapter-button {
+  width: 100%;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border: 0px;
+}
+
+.list-group-item {
+  padding: 0px;
+  background-color: rgb(241, 241, 241);
 }
 </style>

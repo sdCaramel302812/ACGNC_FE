@@ -10,6 +10,7 @@ import store from './store.js';
 import VueCookie from 'vue-cookie';
 import './plugins/axios';
 import './plugins/vue-perfect-scrollbar';
+import './plugins/ckeditor';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
