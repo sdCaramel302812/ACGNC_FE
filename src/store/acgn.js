@@ -15,9 +15,9 @@ const acgn = {
     async fetchTags({ commit }) {
       try {
         await axios.get(API.WORKS_TAG)
-      .then(res => {
-        commit('setTags', res.data);
-      });
+        .then(res => {
+          commit('setTags', res.data);
+        });
         return Promise.resolve();
       } catch(e) {
         return Promise.reject(e);

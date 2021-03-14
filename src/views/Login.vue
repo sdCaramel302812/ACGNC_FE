@@ -69,6 +69,7 @@
   </div>
 </template>
 <script>
+/* eslint-disable vue/no-unused-components */
 import { API } from '@/utils/constant.js';
 
 export default {

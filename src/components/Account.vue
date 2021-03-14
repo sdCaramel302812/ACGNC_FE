@@ -15,6 +15,7 @@ export default {
   name: 'Account',
   methods: {
     logout() {
+      this.$cookie.set('jwt', '');
       this.$router.push('/login');
     }
   },

@@ -162,7 +162,7 @@ export default {
       });
 
        this.$bvModal.show('tag-modal');
-    }
+    },
   },
 }
 </script>

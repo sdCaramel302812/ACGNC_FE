@@ -52,7 +52,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-unreachable": "warn"
+    }
   },
   "browserslist": [
     "> 1%",
