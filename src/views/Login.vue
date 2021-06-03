@@ -5,7 +5,12 @@
         <b-tab title="sign in">
           <b-form-group class="oauth-button-group" label-align>
             <ul v-for="item in oauth" :key="item" style="padding: 0px">
-              <b-button class="oauth-button" :class="item" style="box-shadow: none;">
+              <b-button
+                class="oauth-button"
+                :class="item"
+                style="box-shadow: none;"
+                @click="oauthLogin(item)"
+              >
               </b-button>
             </ul>
           </b-form-group>
@@ -70,7 +75,8 @@
 </template>
 <script>
 /* eslint-disable vue/no-unused-components */
-import { API } from '@/utils/constant.js';
+import { API, GITHUB } from '@/utils/constant.js';
+import qs from 'query-string';
 
 export default {
   name: 'Login',
@@ -158,7 +164,17 @@ export default {
       this.$cookie.set('jwt', result.data.accessToken, 30);
 
       this.$router.push('/');
-    }
+    },
+    oauthLogin(method) {
+      if (method === 'github') {
+        const query = qs.stringify({
+          client_id: '1a071af1b32a01e80f00',
+          scope: GITHUB.SCOPE,
+          state: GITHUB.LOGIN_STATE,
+        });
+        window.location.href = `${GITHUB.AUTH_URL}?${query}`;
+      }
+    },
   }
 }
 </script>

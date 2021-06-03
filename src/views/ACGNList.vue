@@ -2,6 +2,11 @@
   <div>
     <SearchBar placeholder="作品名" @payload="search" :tagsList="tags" />
 
+    <div class="list-block">
+      <b-pagination align="center"></b-pagination>
+      <ItemCard :rate="5" :media="['動畫', '漫畫']" title="少女歌劇" />
+    </div>
+    
     <b-button class="add-button" @click="addACGN">
       +
     </b-button>
@@ -9,12 +14,14 @@
 </template>
 <script>
 import SearchBar from '@/components/SearchBar.vue';
+import ItemCard from '@/components/ItemCard.vue';
 import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'ACGNSearch',
   components: {
     SearchBar,
+    ItemCard,
   },
   data() {
     return {
@@ -66,5 +73,12 @@ export default {
 .btn-secondary:not(:disabled):not(.disabled):active,
 .show>.btn-secondary.dropdown-toggle {
   background-color: rgba(158, 201, 74, 0.5);
+}
+
+.list-block {
+  margin: auto;
+  margin-top: 20px;
+  min-width: 500px;
+  width: 85%;
 }
 </style>

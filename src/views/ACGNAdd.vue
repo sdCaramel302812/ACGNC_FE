@@ -1,7 +1,7 @@
 <template>
   <b-container class="form">
     <div style="margin-bottom: 20px;">
-      <b-button variant="outline-danger">返回</b-button>
+      <b-button variant="outline-danger" @click="returnSearchPage">返回</b-button>
       <b-button variant="success" style="margin-left: 50px; width: 100px;" @click="addRequest">新增</b-button>
       <b-button variant="info" style="float: right;" @click="tagAddToggle">tag</b-button>
     </div>
@@ -127,6 +127,9 @@ export default {
       } else {
         return true;
       }
+    },
+    returnSearchPage() {
+      this.$router.push('/acgn-search');
     },
     openTagsModal() {
       this.tags.sort((a, b) => {

@@ -7,7 +7,12 @@ const config = {
     IMG: `${API}/image`,
     WORKS_INFO: `${API}/works-info`,
     WORKS_CHAPTER: `${API}/works-chapter`,
-  }
+  },
+  GITHUB: {
+    AUTH_URL: `${API}/oauth/github`,
+    SCOPE: 'read:user, read:org, user:email',
+    LOGIN_STATE: 'login',
+  },
 };
 
 module.exports = config;
